@@ -1,29 +1,15 @@
-author: mongoose-os
-description: A Mongoose OS app skeleton
-version: 2.0
+author: Roshan Kattel
+description: Door unlock app
+# arch: PLATFORM
+version: 3.0
+manifest_version: 2017-05-18
+libs_version: 2.19.1
+modules_version: 2.19.1
+mongoose_os_version: 2.19.1
 
-libs_version: ${mos.version}
-modules_version: ${mos.version}
-mongoose_os_version: ${mos.version}
-
-# Optional. List of tags for online search.
-tags:
-  - c
-
-# List of files / directories with C sources. No slashes at the end of dir names.
-sources:
-  - src
-
-# List of dirs. Files from these dirs will be copied to the device filesystem
-filesystem:
-  - fs
-
-# Custom configuration entries, settable via "device configuration"
-# Below is a custom firmware configuration example.
-# Uncomment and modify according to your needs:
-config_schema:  
+config_schema:
   - ["hardware", "o", {title: "Hardware pin mappings"}]
-  - ["hardware.relayPin", "i", 5, {title: "relay pin for door unlock"}]
+  - ["hardware.relayPin", "i", 14, {title: "D5 in wemos for door unlock"}]
   - ["hardware.pulseTm", "i", 100, {title: "relay pin ontime"}]
   - ["hardware.relayStat", "b", true, {title: "initail status"}]
   - ["wifi.sta.enable", false]
@@ -31,57 +17,31 @@ config_schema:
   - ["wifi.ap.ip", "192.168.4.1"]
   - ["wifi.ap.ssid", "Bruno_??????"]
   - ["wifi.ap.pass", "432FACC99A"]
-  - ["blynk.enable", true]
-  - ["blynk.server", "blynk-cloud.com:8442"]
-  - ["blynk.auth", ""]
   - ["dash.enable", true]
-  - ["dash.token", ""]
-  - ["provision.btn.pin", 0]
-  - ["provision.btn.pull_up", true]
-  - ["provision.btn.hold_ms", 5000]
-  - ["provision.led.pin", 2]
-  - ["provision.led.active_high", false]
-  - ["provision.stable_state", 3]
-  - ["provision.timeout",3000]
-  - ["file_logger.enable", true]
-  - ["sys.tz_spec", "s", "UTC-5:45", {title: "Nepal Time"}]
-#  - ["my_app", "o", {title: "My app custom settings"}]
-#  - ["my_app.bool_value", "b", false, {title: "Some boolean value"}]
-#  - ["my_app.string_value", "s", "", {title: "Some string value"}]
-#  - ["my_app.int_value", "i", 123, {title: "Some integer value"}]
+  - ["dash.token", "Qfw1ySVgVU910BZnO3q7KSA"]
 
-# These settings get compiled into the C structure, and can be accessed
-# from the C code this way:
-#
-# printf("Hello from %s!\n", mgos_sys_config_get_device_id());
-#
-# Settings are cool: can be modified remotely without full firmware upgrade!
-#
-# To see all available compiled settings, buid the firmware and open
-# build/gen/mgos_config.h file.
-#
-# Also, in this config_schema section, you can override existing
-# settings that has been created by other libraries. For example, debug log
-# level is 2 by default. For this firmware we can override it to 3:
-#
-# config_schema:
-#  - ["debug.level", 3]
+tags:
+  - js
+
+filesystem:
+  - fs
 
 libs:
-  - origin: https://github.com/mongoose-os-libs/boards
-  - origin: https://github.com/mongoose-os-libs/ca-bundle
-  - origin: https://github.com/mongoose-os-libs/rpc-service-config
-  - origin: https://github.com/mongoose-os-libs/rpc-service-fs
-  - origin: https://github.com/mongoose-os-libs/blynk
-  - origin: https://github.com/mongoose-os-libs/rpc-service-wifi
-  - origin: https://github.com/mongoose-os-libs/http-server
-  - origin: https://github.com/mongoose-os-libs/mjs
-  - origin: https://github.com/mongoose-os-libs/wifi
-  - origin: https://github.com/mongoose-os-libs/provision
-  - origin: https://github.com/mongoose-os-libs/dash
-  - origin: https://github.com/mongoose-os-libs/rpc-common
-  - origin: https://github.com/mongoose-os-libs/rpc-service-ota
-  - origin: https://github.com/mongoose-os-libs/file-logger
-  - origin: https://github.com/mongoose-os-libs/sntp
-# Used by the mos tool to catch mos binaries incompatible with this file format
-manifest_version: 2017-09-29
+  - location: https://github.com/mongoose-os-libs/boards
+  - location: https://github.com/mongoose-os-libs/ca-bundle
+  - location: https://github.com/mongoose-os-libs/rpc-service-config
+  - location: https://github.com/mongoose-os-libs/rpc-service-fs
+  - location: https://github.com/mongoose-os-libs/rpc-service-wifi
+  - location: https://github.com/mongoose-os-libs/http-server
+  - location: https://github.com/mongoose-os-libs/mjs
+  - location: https://github.com/mongoose-os-libs/wifi
+  - location: https://github.com/mongoose-os-libs/dash
+  - location: https://github.com/mongoose-os-libs/rpc-common
+  - location: https://github.com/mongoose-os-libs/rpc-service-ota
+
+conds:
+  - when: mos.platform == "ESP32"
+    apply:
+      build_vars:
+        # Icrease app szie for ESP32
+        APP_SLOT_SIZE: 0x190000

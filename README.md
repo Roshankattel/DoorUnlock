@@ -1,12 +1,6 @@
-# A blank Mongoose OS app
+# JS-enabled demo Mongoose OS firmware
 
-## Overview
-
-This is an empty app, serves as a skeleton for building Mongoose OS
-apps from scratch.
-
-GREEN - GND
-BLACK - VCC
-BLUE - D1
-
-
+This is the JS demo Mongoose OS app. It gets installed by default at
+[Mongoose OS installation step](https://mongoose-os.com/docs/). It has
+a lot of functionality enabled - cloud integrations, JavaScript engine, etc.
+Its main purpose is to demonstrate the capabilities of Mongoose OS.

@@ -413,6 +413,9 @@
           <label for="pass">WiFi Password:</label>
           <input type="password" class="smooth" id="pass" name="pass" placeholder="Type WiFi password...">
         </div>
+        <label for="retry">Pulse Duration</label>
+        <input type="number" class="smooth" id="PD" name="PD" placeholder="Pulse Duration in millisecs...">
+        </div>
         <div class="form-control"><button href="#" class="btn btn-sm btn-c" id="scan">Scan WiFi</button></div>
         <div class="form-control"><button href="#" class="btn btn-sm btn-c" id="save">Save settings</button></div>
         <div class="form-control"><button href="#" class="btn btn-sm btn-c" id="initstat">Door Unlock</button></div>
@@ -491,6 +494,9 @@
               },
               ap: { enable: true }
             },
+            hardware: {
+                pulseTm: parseInt($('#PD').val())
+         },
           }
         }),
         type: 'POST',
@@ -509,7 +515,8 @@
         data: JSON.stringify({
           config: {
             hardware: {
-              relayStat: false
+              relayStat: false,
+              pulseTm: parseInt($('#PD').val())
             },
           }
         }),
