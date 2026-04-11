@@ -9,16 +9,17 @@ mongoose_os_version: 2.19.1
 
 config_schema:
   - ["hardware", "o", {title: "Hardware pin mappings"}]
-  - ["hardware.relayPin", "i", 14, {title: "D5 in wemos for door unlock"}]
+  - ["hardware.relayPin", "i", 14, {title: "D1 in wemos for door unlock"}]
   - ["hardware.pulseTm", "i", 100, {title: "relay pin ontime"}]
-  - ["hardware.relayStat", "b", true, {title: "initail status"}]
+  - ["hardware.initialRelayStat", "b", false, {title: "initial relay status"}]
+  - ["hardware.unlock", "b", false, {title: "unlock from hotspot"}]
   - ["wifi.sta.enable", false]
   - ["wifi.ap.enable", true]
   - ["wifi.ap.ip", "192.168.4.1"]
   - ["wifi.ap.ssid", "Bruno_??????"]
   - ["wifi.ap.pass", "432FACC99A"]
   - ["dash.enable", true]
-  - ["dash.token", "Qfw1ySVgVU910BZnO3q7KSA"]
+  - ["dash.token", ""]
 
 tags:
   - js

@@ -10,24 +10,24 @@ let F_reset = ffi('void mgos_config_reset(int)');
 
 let ping = 0, led;
 let relayPin = Cfg.get('hardware.relayPin');
-let relayStat = Cfg.get('hardware.relayStat'); //initial status of relay
+let relayStat = Cfg.get('hardware.initialRelayStat'); //initial status of relay
 let reset = 0;
 let reset_id;
 
 GPIO.setup_output(relayPin, relayStat);
 
 function unlock() {
-  GPIO.write(relayPin, 0);
+  GPIO.write(relayPin, !relayStat);
   print('Door lock open');
   Timer.set(Cfg.get('hardware.pulseTm'), 0, function () {
     print('Door lock closed');
-    GPIO.write(relayPin, 1);
+    GPIO.write(relayPin, relayStat);
   }, null);
 }
 
-if (relayStat === false) {
+if (Cfg.get('hardware.unlock')) {
   unlock();
-  Cfg.set({ hardware: { relayStat: true } });
+  Cfg.set({ hardware: { unlock: false } });
 }
 
 RPC.addHandler('Wifi.Unlock', function () {
